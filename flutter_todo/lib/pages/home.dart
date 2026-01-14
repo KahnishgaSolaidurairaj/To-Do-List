@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../components/todo.dart';
+import '../pages/general.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,20 +8,27 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  late TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 3, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 77, 106, 80),
       appBar: AppBar(
-        title: Text('Todo App'),
-        elevation: 0,
+        title: const Text("To-Do"),
       ),
-      body: ListView(
-        children: [
-          ToDoComponent(),
+      body: TabBarView(
+        controller: tabController,
+        children: const [
+          General(),
         ],
-      )
+      ),
     );
   }
 }
